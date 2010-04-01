@@ -77,10 +77,12 @@
 	          } else if(e.keyCode === 39) {
 	            action = 'next';
 	          }
-	          action.length && this._navigate(action,e);
+	          action.length && self._navigate(action,e);
 	        });			
 		},
 		_navigate:function(action,event){
+			//TODO: Debounce this function so it can't happen a fuckload of times.
+			//TODO: Prevent navigation below 0 and above max slides
 			var ui = {visibleSlide:this.current,visibleSlideIndex:this.count};
 			if (typeof action == "string"){
 				action == "next" && this.count++;
