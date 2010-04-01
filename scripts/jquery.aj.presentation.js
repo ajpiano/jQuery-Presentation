@@ -88,7 +88,7 @@
 			} else {
 				this.count = action;
 			}
-			ui.selectedSlide = this.slides.eq(this.count-1)
+			this.current = ui.selectedSlide = this.slides.eq(this.count-1);
 			ui.selectedSlideIndex = this.count;
   	     	switch (this.options.transition) {
   	        	case 'show':
@@ -102,8 +102,9 @@
 					});
 					break;
 				default:
-					ui.visibleSlide.fadeOut(500);
-					ui.selectedSlide.fadeIn(500)
+					ui.visibleSlide.fadeOut(500,function() {
+						ui.selectedSlide.fadeIn(500);
+					});
 			}
   			this.pagerPages.removeClass(this.options.currentClass).eq(this.count-1).addClass(this.options.currentClass);
 		},
