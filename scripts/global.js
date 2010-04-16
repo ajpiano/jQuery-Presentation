@@ -2,25 +2,42 @@
 	var aj = {};
 	aj.slides = {
 		1:{
-			init:function(e,ui) {
-				console.log(this)
-				$(this).css("color","red")
+			init:function(){
+				var $this = $(this);
+				$this.data("pulsate",setInterval(function(){
+					$this.animate({color:"#bada55"},2000,function() {
+						$this.animate({color:"#fff"},2000)
+					});
+				},4000));			
+			},
+			open:function(e,ui) {
 			},
 			close:function(e,ui){
-				console.log(this,"closed the first slide");
+				clearInterval($(this).data("pulsate"));
+				$(this).stop(1,1).css({color:"#000"});
 			}
 
 		},
-		3:{
+		".slide":{
 			init:function(e,ui){
-				console.log(this);
+
+			},
+			open:function(e,ui){
+
+			},
+			close:function(e,ui){
+				console.log("closed any slide");
+			}
+		},
+		".penultimate":{
+			init:function(e,ui){
 				$(this).css("color","green");
 			},
 			open:function(e,ui){
-				console.log(this,"opened the 3th slide");
+				console.log(this,"opened slide with class penultimate");
 			},
 			close:function(e,ui){
-				console.log(this,"closed the 3th slide");
+				console.log(this,"closed slide with class penultimate");
 			}
 		}
 	};
@@ -30,14 +47,12 @@
 
 $(document).ready(function(){
 	var preso = $('#slides').presentation({
-		changeSlide:function(e,ui) {
-			var closed = !aj.slides[ui.visibleIndex] ? true : (aj.slides[ui.visibleIndex].close && aj.slides[ui.visibleIndex].close.call(ui.visible,e,ui) !== false),
-				opened = !aj.slides[ui.selectedIndex] ? true : (aj.slides[ui.selectedIndex].open && aj.slides[ui.selectedIndex].open.call(ui.selected,e,ui) !== false);
-			return closed && opened;
-		}
-	}),
-	slides = preso.children();
-	$.each(aj.slides,function(i,slide){
-		slide.init && slide.init.call(slides.get(i-1))
-	})
+			slides:aj.slides,
+			pager:true,
+			prevNext:true,
+			navigate:function(e,ui) {
+				console.log("omg i navigated! hollaback!")
+			}
+		}),
+		slides = preso.children(".slide");
 });
