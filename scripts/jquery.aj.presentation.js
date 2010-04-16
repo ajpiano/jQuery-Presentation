@@ -24,20 +24,30 @@
  * });
  */
 (function($) {
+	var navigationTimeout,
+		swapActive = function(e) {
+			$(e.target).closest("li").not("."+this.options.currentClass).toggleClass("ui-state-active",e.type == "mouseover").toggleClass("ui-state-default",e.type == "mouseout");			
+		};
+	
 	$.widget( "aj.presentation", {
 		options: {
 				slide: '.slide',
-				pagerClass: 'nav-pager',
-				prevNextClass: 'nav-prev-next',
-				currentClass:"current",
+				pagerClass: 'aj-presentation-pager',
+				prevNextClass: 'aj-presentation-prev-next',
+				currentClass:"aj-presentation-current",
 				prevText: 'Previous',
 				nextText: 'Next',
 				transition: "fade",
 				start: parseInt(window.location.hash.substr(1)) || 1,
-				changeSlide:$.noop
+				navigate:$.noop,
+				slides:false,
+				pager:false,
+				prevNext:false,
+				themeswitcher:false
 		},
 		_create: function() {
-	        this.slides = this.element.find(this.options.slide);
+	        this.slides = this.element.find(this.options.slide).addClass("aj-presentation-slide")
+			this.options.slides && this._connectSlides();
 			//Make sure the starting value isn't 0
 			this.options.start = this.options.start || 1;
 			//Set the current to the specified starting slide, a number in the url,
@@ -47,27 +57,34 @@
 	        //Hide everything except the hash or the first			
 			this.slides.not(this.current[0]).hide()
 	        this._addControls();
+			$(document.body).addClass("ui-widget-content");
 
 		},
 		_addControls:function() {
 			var self = this, pagerPages = [], i = 0, numSlides = this.slides.length;
 	        //Add in the pager
-	        this.pager = $('<ol class="'+this.options.pagerClass+'">');
+	        this.pager = $('<ol class="'+this.options.pagerClass + (!this.options.pager ? ' ui-helper-hidden': '') +'">');
 	        for(i = 1; i < numSlides+1; i++) {
-	          pagerPages.push('<li><a href="#'+i+'">'+i+'</a></li>');
+	          pagerPages.push('<li class="ui-state-default ui-corner-top"><a href="#'+i+'">'+i+'</a></li>');
 	        }
-			this.pager.html(pagerPages.join('')).appendTo(this.element);
-			this.pagerPages = this.pager.children().find("a").click($.proxy(this._pagerClick,this)).end();
-			this.pagerPages.eq(this.count-1).addClass(this.options.currentClass);
-			
+			this.pager.html(pagerPages.join('')).appendTo(this.element).delegate("a","mouseenter mouseleave",$.proxy(swapActive,this)).delegate("a","click",$.proxy(this._pagerClick,this));
+			this.pagerPages = this.pager.children();
+			this.pagerPages.eq(this.count-1).addClass(this.options.currentClass).toggleClass("ui-state-default ui-state-active");
 
 	        //Add in the previous/next links
-	        this.prevNext = $('<ul class="'+this.options.prevNextClass+'"><li><a href="#prev" class="prev">'+this.options.prevText+'</a></li><li><a href="#next" class="next">'+this.options.nextText+'</a></li>').appendTo(this.element)
-			this.prevNext.find("li a").click(function(e){
-				self._navigate($(this).attr("class"),e)
-			})
+	        this.prevNext = $('<ul class="'+this.options.prevNextClass+ (!this.options.prevNext ? ' ui-helper-hidden': '')+ '">' +
+							'<li class="ui-state-default ui-corner-bottom"><a href="#prev" class="prev">'+this.options.prevText+'</a></li>' +
+							'<li class="ui-state-default ui-corner-bottom"><a href="#next" class="next">'+this.options.nextText+'</a></li>')
+							.appendTo(this.element)
+							.delegate("a","mouseenter mouseleave",$.proxy(swapActive,this))
+							.delegate("a","click",function(e){
+								self._navigate($(this).attr("class"),e)
+							});
 
-
+			//Add in the themeswitcher widget if available 
+			if (this.options.themeswitcher && $.fn.themeswitcher) {
+				this.switcher = $("<li>").appendTo(this.prevNext).themeswitcher();
+			}
 	        //When you hit the left arrow, go to previous slide
 	        //When you hit the right arrow, go to next slide
 	        $(document).bind("keyup.presentation",function(e) {
@@ -80,40 +97,87 @@
 	          action.length && self._navigate(action,e);
 	        });			
 		},
+		_connectSlides:function(){
+			$.each(this.options.slides,$.proxy(function(key,slide){
+				//If the key is a number, associate the slide data with the according slide
+				var self = this;
+				if (!isNaN(+key)){
+					var s = this.slides.eq(+key-1).bind("navigate.presentation",function(e,ui){
+						slide[ui.action] && slide[ui.action].call(s,e,ui);
+					});
+					slide.init && slide.init.call(s,$.Event("init.presentation"),this._ui("visible"));
+				} else {
+					this.element.delegate(key,"navigate.presentation",function(e,ui){
+						slide[ui.action] && slide[ui.action].call(this,e,ui)
+					})
+					slide.init && this.element.find(key).each(function(i,n) { slide.init.call(this,$.Event("init.presentation"),self) });
+				}
+			},this));
+		},
 		_navigate:function(action,event){
 			//TODO: Debounce this function so it can't happen a fuckload of times.
 			//TODO: Prevent navigation below 0 and above max slides
-			var ui = {visibleSlide:this.current,visibleSlideIndex:this.count};
-			if (typeof action == "string"){
-				action == "next" && this.count++;
-				action == "prev" && this.count--;
-			} else {
-				this.count = action;
-			}
-			this.current = ui.selectedSlide = this.slides.eq(this.count-1);
-			ui.selectedSlideIndex = this.count;
-  	     	switch (this.options.transition) {
-  	        	case 'show':
-				case 'hide':
-					ui.visibleSlide.hide();
-					ui.selectedSlide.show();
-					break;
-				case 'slide':
-					ui.visibleSlide.slideUp(500, function () {
-					    ui.selectedSlide.slideDown(1000)
-					});
-					break;
-				default:
-					ui.visibleSlide.fadeOut(500,function() {
-						ui.selectedSlide.fadeIn(500);
-					});
-			}
-  			this.pagerPages.removeClass(this.options.currentClass).eq(this.count-1).addClass(this.options.currentClass);
+			navigationTimeout && clearTimeout(navigationTimeout);
+			navigationTimeout =  setTimeout($.proxy(function() {
+			var ui = this._ui("visible");
+				if (typeof action == "string"){
+					action == "next" && this.count++;
+					action == "prev" && this.count--;
+				} else {
+					this.count = action;
+				}
+				this.current = this.slides.eq(this.count-1);
+				$.extend(ui,this._ui("selected"));
+				this._trigger("navigate",event,ui);
+	  	     	switch (this.options.transition) {
+	  	        	case 'show':
+					case 'hide':
+						ui.visibleSlide.trigger("navigate.presentation",[$.extend({action:"close"},ui)])
+						ui.visibleSlide.hide();
+						ui.selectedSlide.show();
+						ui.selectedSlide.trigger("navigate.presentation",[$.extend({action:"open"},ui)])								
+						break;
+					case 'slide':
+						ui.visibleSlide.trigger("navigate.presentation",[$.extend({action:"close"},ui)])							
+						ui.visibleSlide.slideUp(500, function () {
+						    ui.selectedSlide.slideDown(1000,function(){
+								ui.selectedSlide.trigger("navigate.presentation",[$.extend({action:"open"},ui)])															
+							})
+						});
+						break;
+					default:
+						ui.visibleSlide.trigger("navigate.presentation",[$.extend({action:"close"},ui)])							
+						ui.visibleSlide.fadeOut(500,function() {
+							ui.selectedSlide.fadeIn(500,function(){
+								ui.selectedSlide.trigger("navigate.presentation",[$.extend({action:"open"},ui)])																							
+							});
+						});
+				}
+				if (this.options.pager) {
+	  				this.pagerPages.removeClass(this.options.currentClass+ " ui-state-active").addClass("ui-state-default").eq(this.count-1).addClass(this.options.currentClass + " ui-state-active");
+				}
+			},this),500);
+
 		},
 		_pagerClick:function(event) {
 			event.preventDefault();
 			this._navigate($(event.target).parent().prevAll().length+1,event);
 
+		},
+		_ui:function(mode) {
+			var ui = {presentation:this};
+			mode = $.isArray(mode) ? mode : [mode];
+			$.each(mode,$.proxy(function(i,m){
+				ui[m+"Slide"] = this.current;
+				ui[m+"SlideIndex"] = this.count;				
+			},this));
+			return ui;			
+		},
+		next:function(e){
+			this._navigate("next",e)
+		},
+		next:function(e){
+			this._navigate("prev",e)
 		}
 	});
 
