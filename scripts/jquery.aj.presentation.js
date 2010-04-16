@@ -115,7 +115,6 @@
 			},this));
 		},
 		_navigate:function(action,event){
-			//TODO: Debounce this function so it can't happen a fuckload of times.
 			//TODO: Prevent navigation below 0 and above max slides
 			navigationTimeout && clearTimeout(navigationTimeout);
 			navigationTimeout =  setTimeout($.proxy(function() {
