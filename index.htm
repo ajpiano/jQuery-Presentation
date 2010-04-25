@@ -3,49 +3,836 @@
   <head>
     <title>jQuery Presentation Plugin</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <script type="text/javascript">(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
-<!-- 
-    <link href="../js/jquery-ui/themes/cupertino/jquery-ui-1.8.custom.css" type="text/css" rel="stylesheet" media="Screen,projection" />
--->
+    <script >(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
+    <link href="../js/jquery-ui/themes/wonka/jquery-ui-1.8.custom.css" type="text/css" rel="stylesheet" media="Screen,projection" />
     <link href="stylesheets/aj.presentation.css" type="text/css" rel="stylesheet" media="Screen,projection" />
     <link href="stylesheets/charlie.css" type="text/css" rel="stylesheet" media="Screen,projection" />
+	<link href="sh/styles/shCore.css" rel="stylesheet" type="text/css" />
+	<link href="sh/styles/shThemeRDark.css" type="text/css" rel="stylesheet"/>
   </head>
-  <body>
+  <body id="catwf">
       <div id="slides">
-        <div class="slide center box_rotate" id='splash'>
-          	<h1>Charlie<h1> 
-			<h4>and the</h4>
-			<h2>Widget Factory</h2>
-			<br/>
-			<h3>Adam &nbsp; J. Sontag</h3>
+        <div class="slide center box_rotate wonka-green" id='splash'>
+			<header>
+          		<h1>Charlie<h1> 
+				<h4>and the</h4>
+				<h2>Widget Factory</h2>
+				<br/>
+				<h3>Adam &nbsp; J. Sontag</h3>
+				<br/>
+			</header>
 			<img src="images/yayQueryLogo.png" alt="YayQueryLogo" id='yayQueryLogo' width="25%">
+			<p>BAjqCON, 25 April 2010</p>
         </div>
-        <div class="slide" id='foo'>
-          <h2>Slide 2</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <div class="slide box_rotate center">
+          <h1 class='wonka-blue'>jQuery</h1>
+          <h1 class='wonka-white'>Plugins</h1>
+          <h1 class='wonka-magenta'>Are</h1>
+          <h1 class='wonka-green'>Awesome!</h1>
+		  <iframe src='http://www.google.com/search?q="awesome+jquery+plugins"' id="awesome_jquery_plugins"></iframe>
+<!-->          <h1 class='wonka-red'>but&hellip;</h1>-->
+        </div>
+        <div class="slide">
+			<p>The jQuery plugin architecture makes it really easy to create reusable functions that work on any elements.</p>
+		  	<textarea class='brush: js'>
+			(function($){
+				$.fn.wonkafy = function(opts) {
+					var options = $.extend({color:"green"},opts);
+					return this.each(function(){
+						$(this).replaceWith(function(i,html){
+							return "<h1 class='wonka-"+options.color+"'>"+html+"</h1>";
+						});
+					});
+				};
+				$("#omg").one("click",function(e) {
+					$(this).wonkafy();
+				});
+			})(jQuery);
+			</textarea>
+			<p id='omg'>OMG!</p>
+        </div>
+        <div class="slide">
+			<p>But if you have bigger dreams, things can get pretty hairy, pretty quickly.</p>
+			<ul>
+				<li>Reverse what your plugin did?</li>
+				<li>Interact with your plugin afterward?</li>
+				<li>$.fn.dewonkafy?</li>
+				<li>$.fn.makeMyWonkaGlow?</li>
+			</ul>
+        </div>
+		<div class="slide">
+			<h3 class="center wonka-green">A World Of <span class="wonka-magenta">Pure Imagination</span></h3>
+			<p>Let's expand on wonkafy by giving it more FEATURES!</p>
+			<ul>
+				<li>Do something fancy when you click it!</li>
+				<li>Fire a callback when the fancy thing is done!</li>
+				<li>Reverse the wonka effect and return to the original state!</li>
+			</ul>
+		</div>
 
+        <div class="slide">
+			<h2 class='wonka-magenta'>Statefulness?</h2>
+			<iframe src='http://en.wikipedia.org/wiki/Stateful' id="stateful_wiki" class='ui-corner-all'></iframe>			
+			<ul>
+				<li>Respond to different interactions</li>
+				<li>Allow users of your plugin to respond to events</li>
+				<li>Invoke plugin actions programmatically</li>
+				<li>Temporarily disable or permanently undo plugin's effect</li>
+				<li>Neatly normalize around quirks</li>
+			</ul>
+        </div>
+        <div class="slide center box_rotate">
+			<h3 class='wonka-blue'>Achieving <span class='wonka-red'>Statefulness!</span></h3>
+			<img src="images/alaska_statehood.jpg" id="alaska_statehood" class="box_shadow">
         </div>
         <div class="slide">
-          <h2>Slide 3</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			<h3 class='wonka-orange'>"A Plugin Development Pattern"</h3>
+			<div>
+				Pretty awesome blog post from 2007, by Mike Alsup 
+				<div class='ui-state-default ui-corner-all' style="display:inline-block;">
+				<span class="ui-icon ui-icon-link"></span>
+				</div>
+			</div>
+		  	<textarea class='brush: js'>			
+			(function(){
+				$.fn.wonkafy = function(opts) {
+					//If there are no arguments, or the 'opts' arg is an object, init the plugin.
+					if (!arguments.length || $.isPlainObject(opts)) {
+						var options = $.extend({},$.fn.wonkafy.defaults,opts);
+						return this.each(function(){
+							var $this = $(this)
+										.data("pre-wonka.wonkafy",this)
+										.data("options.wonkafy",options)
+										.data("isWonka.wonkafy",true),
+								wonkaed = $("<h1 class='wonkafied wonka-"+options.color+"'" + (this.id ? " id='"+this.id+"'" : "") +">"+$this.html()+"</h1>")
+										  .insertAfter(this);
+							//detach the element so that we don't lose the .data
+							$this.data("wonkaed.wonkafy",wonkaed).detach();
+
+							//copy the data to the proxy element
+							wonkaed.data($this.data()).click(function(){
+								$.fn.wonkafy.pulsate($this);
+							});
+						});					
+					} 
+					//Otherwise, assume a method call, and delegate to the method.					
+					else if (typeof opts == "string") {
+						$.fn.wonkafy[opts](this);
+						return this;
+					}
+				};
+				
+				$.fn.wonkafy.defaults = {
+					color:"green",
+					pulseColor:"yellow",
+					pulsated:$.noop
+				};
+				
+				$.fn.wonkafy.destroy = function(elem) {
+					elem.data("wonkaed.wonkafy").replaceWith(elem.data("pre-wonka.wonkafy")).removeData(".wonkafy");
+				};
+				
+				$.fn.wonkafy.pulsate = function(elem) {
+					var opts = elem.data("options.wonkafy"),
+						wonkaed = elem.data("wonkaed.wonkafy"),
+						isWonka = elem.data("isWonka");
+					if (isWonka) {
+						wonkaed.stop(1,1).switchClass("wonka-"+opts.color,"wonka-"+opts.pulseColor,2000,function(){
+							wonkaed.switchClass("wonka-"+opts.pulseColor,"wonka-"+opts.color,2000,opts.pulsated);
+						});
+					}
+				};
+
+			})(jQuery);
+
+			$("#omg2").one("click",function(e){
+				var wonkification = {
+					pulseColor:"blue"
+					pulsated:function(){
+						omg2.wonkafy("destroy").one("click",function(){
+							omg2.wonkafy(wonkification);
+						})
+					}
+				},
+				omg2 = $(this).wonkafy(wonkification);
+			});			
+		
+			</textarea>
+			<p id='omg2'>OMG!</p>			
+			<div id="a_plugin_development_pattern">
+				<iframe src='http://www.learningjquery.com/2007/10/a-plugin-development-pattern' class='ui-corner-all'></iframe>				
+			</div>
         </div>
-        <div class="slide penultimate">
-          <h2>Slide 4</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-        <div class="slide">
-          <h2>Slide 5</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
+		<div class="slide goodbad">
+			<section class="good">
+			<h3 class="wonka-blue">Good</h3>
+			<ul>
+				<li>Occupies a single namespace</li>
+				<li>Undo!</li>
+				<li>Access to "internal" methods via .wonkafy("pulse")</li>
+			</ul>
+			</section>
+			<section class="bad">
+			<h3 class="wonka-red">Bad</h3>
+			<ul>
+				<li>Doesn't take advantage of scope</li>
+				<li>No concept of <em>this</em></li>
+				<li>Can't change options</li>
+				<li>Excessive infrastructure, leading to inefficiencies</li>
+			</ul>	
+		</section>
+		</div>
+		<div class="slide">
+			<h3 class='wonka-green'>You Down with OOP?</h3>
+		  	<textarea class='brush: js'>
+				(function(){	
+					function Wonkafy(elem,opts) {
+						var self = this; 
+						this.options = $.extend({
+							color:"green",
+							pulseColor:"yellow",
+							pulsated:$.noop
+						},opts);
+
+						this.pulse = function() {
+							self.wonkaed.stop(1,1).switchClass("wonka-"+this.options.color,"wonka-"+this.options.pulseColor,2000,function(){
+								$(this).switchClass("wonka-"+self.options.pulseColor,"wonka-"+self.options.color,2000,function(){ 
+									self.options.pulsated.call(this,self);
+								});
+							});							
+						};
+
+						this.destroy = function() {
+							self.wonkaed.remove();
+							self.element.show().removeData("wonkafy");
+						};
+
+
+						this.element = $(elem).data("wonkafy",this).hide();
+						this.wonkaed = $("<h1 class='wonkafied wonka-"+this.options.color+"'>"+this.element.html()+"</h1>")
+									   .click(this.pulse)
+									   .insertAfter(this.element);						
+						return this;					
+					}
+
+					// aww look at this little guy!
+					$.fn.wonkafy = function(opts) {
+						return this.each(function(){
+							!$(this).data("wonkafy") && new Wonkafy(this,opts);
+						});
+					}
+				})();			
+				
+				$("#omg3").one("click",function(e) {
+					var wonkification = {
+						color:"orange",
+						pulseColor:"green",
+						pulsated:function(){
+							omg3.data("wonkafy").destroy();
+							omg3.one("click",function(){
+								omg3.wonkafy(wonkification);
+							})
+						}
+					},
+					omg3 = $(this).wonkafy(wonkification);
+					setTimeout(function() {
+						omg3.data("wonkafy").pulse();
+					},500)
+				});		
+			</textarea>
+			<p id='omg3'>OMG</p>		
+		</div>
+		<div class="slide goodbad">
+			<section class="good">
+			<h3 class="wonka-blue">Good</h3>
+			<ul>
+				<li>Less infrastructure</li>
+				<li>Encapsulation</li>
+				<li>Accesss to internal methods via .data("wonkafy").pulse()</li>
+			</ul>
+			</section>
+			<section class="bad">
+			<h3 class="wonka-red">Bad</h3>
+			<ul>
+				<li>Still a bunch of manual data- and options-related infastructure</li>
+				<li>Can't change options</li>
+				<li>Aww, but I thought .wonkafy("pulse") was convenient! :(</li>
+		</section>
+		</div>
+		<div class="slide">
+			<h3>How Can I Be <span class='wonka-blue'>Cool?</span></h3>
+			<ul>
+				<li>Oh, I know! I'll use jQuery to do my presentation!</li>
+				<li>jQuery Presentation Plugin -  Viget Labs
+					<div class='ui-state-default ui-corner-all' style="display:inline-block;">
+					<span class="ui-icon ui-icon-link"></span>
+					</div>
+				</li>
+				<li>But then&hellip;</li>
+			</ul>
+			<div id="viget_presentation_plugin">			
+		  		<iframe class='ui_corner_all' src='http://www.viget.com/inspire/jquery-presentation-plugin/'></iframe>						
+			</div>
+			<div class="sh_wrapper">
+		  	<textarea class='brush: js'>
+				(function($) {
+				  $.fn.presentation = function(options) {
+				    var config = {
+							slide: '.slide',
+							pagerClass: 'nav-pager',
+							prevNextClass: 'nav-prev-next',
+							prevText: 'Previous',
+							nextText: 'Next',
+							transition: "fade"
+						};
+				    $(this).each(function() {
+
+
+				      var $presentation = $(this);
+				      $presentation.count = 1;
+
+				      //Control the changing of the slide
+				      $presentation.changeSlide = function(newSlide) {
+
+				      	$presentation.visibleSlide = $presentation.slides.filter(':visible');
+				        $presentation.slideToShow = $presentation.slides.filter(':nth-child('+newSlide+')')
+
+				      	switch ($presentation.options.transition) {
+				        	case 'show/hide':
+										$presentation.visibleSlide.hide();
+										$presentation.slideToShow.show();
+										break;
+									case 'slide':
+										$presentation.visibleSlide.slideUp(500, function () {
+										    $presentation.slideToShow.slideDown(1000)
+										});
+										break;
+									default:
+										$presentation.visibleSlide.fadeOut(500);
+										$presentation.slideToShow.fadeIn(500)
+								}
+
+				        $presentation.find('.'+$presentation.options.pagerClass).children('.current').removeClass('current');
+				        $presentation.find('.'+$presentation.options.pagerClass).children(':nth-child('+newSlide+')').addClass('current');
+				      };
+
+				      //Handle clicking of a specific slide
+				      $presentation.pageClick = function($pager) {
+				        if(!$pager.parent().hasClass('current')) {
+				          $presentation.changeSlide($pager.parent().prevAll().length + 1);
+				          $presentation.count = $pager.parent().prevAll().length + 1;
+				        }
+				      };
+
+				      //Handle the previous and next functionality
+				      $presentation.prevNextClick = function(action) {
+				        if(action === 'prev') {
+				          $presentation.count === 1 ? $presentation.count = $presentation.slides.length : $presentation.count--;            
+				        } else {
+				          $presentation.count === $presentation.slides.length ? $presentation.count = 1 : $presentation.count++;
+				        }
+
+				        $presentation.changeSlide($presentation.count);
+				        window.location.hash = '#'+$presentation.count;
+				      };
+
+				      $presentation.addControls = function() {
+				        $presentation.numSlides = $presentation.slides.length;
+
+				        //Add in the pager
+				        var navPager = '<ol class="'+$presentation.options.pagerClass+'">';
+				        for(var i = 1; i < $presentation.numSlides+1; i++) {
+				          navPager += '<li><a href="#'+i+'">'+i+'</a></li>';
+				        }
+				        $presentation.append(navPager);
+
+				        if($presentation.currentHash) {
+				          $presentation.find('.'+$presentation.options.pagerClass).children(':nth-child('+$presentation.currentHash+')').addClass('current');
+				          $presentation.count = $presentation.currentHash;
+				        } else {
+				          $presentation.find('.'+$presentation.options.pagerClass).children(':first-child').addClass('current');
+				          $presentation.count = 1;
+				        }
+
+				        //Add in the previous/next links
+				        $presentation.append('<ul class="'+$presentation.options.prevNextClass+'"><li><a href="#prev" class="prev">'+$presentation.options.prevText+'</a></li><li><a href="#next" class="next">'+$presentation.options.nextText+'</a></li>');
+
+				        //When a specific page is clicked, go to that page
+				        $presentation.find('.'+$presentation.options.pagerClass).find('a').bind('click', function() {
+				          $presentation.pageClick($(this));
+				        });
+
+				        //When you click a previous/next link
+				        $presentation.find('.'+$presentation.options.prevNextClass).find('a').click(function() {
+				          $presentation.prevNextClick($(this).attr('class'));
+				          return false;
+				        });
+
+				        //When you hit the left arrow, go to previous slide
+				        //When you hit the right arrow, go to next slide
+				        $(document).keyup(function(e) {
+				          var action = '';
+				          if(e.keyCode === 37) {
+				            action = 'prev';
+				          } else if(e.keyCode === 39) {
+				            action = 'next';
+				          }
+
+				          if(action !== '') {
+				            $presentation.prevNextClick(action);
+				          }
+				        });
+				      };
+
+				      //Start this thing
+				      $presentation.init = function() {
+				        $presentation.options = $.extend(config, options);
+				        $presentation.slides = $presentation.find($presentation.options.slide);
+				        $presentation.currentHash = window.location.hash.substr(1);
+
+				        //Hide everything except the hash or the first
+				        if($presentation.currentHash) {
+				          $presentation.slides.filter(':not(:nth-child('+$presentation.currentHash+'))').hide();
+				        } else {
+				          $presentation.slides.filter(':not(:first)').hide();
+				        }
+
+				        $presentation.addControls();
+				      };
+				      $presentation.init();
+
+
+				    });
+				  };
+				})(jQuery);			
+			</textarea>	
+			</div>	
+			<ul>
+				<li>Please sir, how I can make to fix this?</li>	
+			</ul>
+		</div>
+		<div class="slide center box_rotate">
+			<h2 class="wonka-blue">I've Got A</h2>
+			<h2 class="wonka-blue"><span class="wonka-yellow">Golden</span> Ticket!</h2>
+			<img src="images/goldenticket.gif" id="goldenticket" class="box_shadow">			
+		</div>
+		<div class="slide">
+			<h3 class="center">The <span class="wonka-yellow">jQuery UI</span> Widget Factory</h3>
+			<p><em>jquery.ui.widget.js</em></p>
+			<p>It does the boring work for you!</p>
+			<img src="images/oompaloompa.jpg" id="oompaloompa">						
+			<ul>
+				<li>Encapsulated instance</li>
+				<li>Extends <em>jQuery.fn</em></li>
+				<li>Merges defaults with user-supplied options</li>
+				<li>Storage in <em>.data()</em></li>
+				<li>Methods accessible via string - <em>plugin("foo")</em> - or directly - <em>.foo()</em></li>
+				<li>Prevents against multiple instantiation</li>
+				<li>Evented structure for handling setup, teardown, option changes</li>
+				<li>Easily expose callbacks</li>
+				<li>Sane default scoping</li>
+				<li>Free pseudoselector</li>
+				<li>Standalone from jQuery UI</li>
+			</ul>
+		</div>
+		<div class="slide">
+			<h3 class="wonka-green">Skeleton</h3>
+			<div class="sh_wrapper">
+			  	<textarea class='brush: js'>
+					(function($){
+						// IMPORTANT!
+						// The "ui" namespace is reserved by jQuery UI!
+						// Use your own namespace please!
+						// The namespace jQuery.ww will automatically be created if it doesn't exist
+						$.widget("ww.wonkafy",{
+							options:{
+								nickname:"dawg",
+								pulsated:$.noop // a jQuery utility function that does nothing.  (No Operation)
+							},
+							_create:function() {
+								// The _create method is called the first time the plugin is invoked
+								// This is where most of your setup will happen
+								// Two things are already available:
+								// this.element -- a jQuery object of the element the widget was invoked on.
+								// this.options --  the merged options hash
+								this.element.addClass("wonkafied").bind("click.presentation",$.proxy(function(e) {
+									alert("If I were awesome, I would pulsate right now.");
+									//To trigger a callback, supply the callback name
+									// Optionally supply an event object and a hash of data
+									this._trigger("pulsated",e,{nickname:this.options.nickname})
+								},this));
+							},
+							_setOption:function(key,value) {
+								// Use the _setOption method to respond to changes to options
+								switch(key) {
+									case "nickname":
+										alert("Changing nickname to "+value);
+										break;
+								}
+								// Call the base _setOption method
+								$.Widget.prototype._setOption.apply(this,arguments)
+							},
+							destroy:function() {
+								// Use the destroy method to reverse everything your plugin has applied
+								this.element.removeClass("wonkafied")
+								// After you do that, you still need to invoke the "base" destroy method
+								// Does nice things like unbind all namespaced events
+								$.Widget.prototype.destroy.call(this);
+							}
+						});
+					})(jQuery);
+					$("#omg4").wonkafy({
+						foo:"bam",
+						pulsated:function(e,ui){
+							alert("But I'm not, "+ui.nickname);
+						}
+					});		
+				</textarea>
+			</div>
+			<p id="omg4">OMG</p>
+		</div>
+		<div class="slide">
+			<h3 class="wonka-orange">Exoskeleton</h3>
+			<div class="sh_wrapper">
+			  	<textarea class='brush: js'>
+					(function($){
+						$.widget("ww.wonkafy",{
+							options:{
+								color:"green",
+								pulseColor:"yellow",
+								pulsated:$.noop
+							},
+							_create:function() {
+								this.wonkaed = $("<h1 class='wonkafied wonka-"+this.options.color+"'>"+this.element.html()+"</h1>")
+											   .bind("click.presentation",$.proxy(this.pulsate,this))
+											   .insertAfter(this.element.hide());						
+							},
+							_setOption:function(key,value) {
+								switch(key) {
+									case "color":
+										this.wonkaed.removeClass(this.options.color).addClass("wonka-"+value);
+										break;
+								}
+								$.Widget.prototype._setOption.apply(this,arguments)							
+							},
+							pulsate:function(){
+								var self = this;											
+								self.wonkaed
+								.stop(1,1)
+								.switchClass("wonka-"+this.options.color,"wonka-"+this.options.pulseColor,2000,function(){
+									$(this).switchClass("wonka-"+self.options.pulseColor,"wonka-"+self.options.color,2000,function(){ 
+										self.options.pulsated.call(this,self);
+									});
+								});							
+							},
+							destroy:function() {
+								this.wonkaed.remove();
+								this.element.show();
+								// After you do that, you still need to invoke the "base" destroy method
+								$.Widget.prototype.destroy.call(this);
+							}
+						});
+					})(jQuery);
+					$("#omfg").one("click",function() { 
+						$(this).wonkafy({
+							pulsated:function(e,ui){
+								alert("I saw u in the chocolate factory, U wuz pulsin' liek crazy.");
+							}
+						});	
+					});
+				</textarea>
+			</div>
+			<p id="omfg">OMFG!</p>			
+		</div>
+		<div class='slide'>
+			<h3 class='wonka-yellow'>Advantages</h3>
+			<ul>
+				<li>Central storage location</li>
+				<li>DOM Element &#8596; Widget Instance</li>
+				<li>Separation between user input and plugin logic
+					<ul>
+						<li>No more <em>.trigger("click")</em></li>
+					</ul>
+				</li>
+				<li>JUST START UR CODIN!
+					<ul>
+						<li>Stop worrying about infrastructure bullshit!</em>!</li>
+					</ul>				
+				</li>
+				<li>All that other stuff I talked about earlier</li>
+				<li>And oh yeah&hellip; THEMEROLLER!</li>
+			</ul>			
+		</div>
+		<div class="slide">
+			<h3 class="wonka-blue">Keep Rollin Rollin Rollin' &nbsp;&nbsp;&nbsp;<span class="wonka-red">Wut?</span></h3>
+			<ul>
+				<li>jQuery UI Themeroller
+					<div class='ui-state-default ui-corner-all' id="themeroller_trigger" style="display:inline-block;">
+						<span class="ui-icon ui-icon-link"></span>
+					</div>
+				</li>
+				<li>You don't have to be a widget factory plugin (or JS at all) to support TR</li>
+				<li>You don't have to support TR to use the widget factory</li>
+				<li>But it is pretty baller if you do</li>
+				<li>How?
+					<div class='ui-state-default ui-corner-all' id="cssframework_trigger" style="display:inline-block;">
+						<span class="ui-icon ui-icon-link"></span>
+					</div>				
+				</li>
+			</ul>
+			<div id="themeroller_dialog">			
+		  		<iframe class='ui_corner_all' src='http://jqueryui.com/themeroller/?ffDefault=Lucida%20Grande,%20Lucida%20Sans,%20Arial,%20sans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=6px&bgColorHeader=b5a0c5&bgTextureHeader=04_highlight_hard.png&bgImgOpacityHeader=50&borderColorHeader=3d2163&fcHeader=3d2163&iconColorHeader=ce469d&bgColorContent=3d2163&bgTextureContent=22_spotlight.png&bgImgOpacityContent=23&borderColorContent=3d2163&fcContent=ffffff&iconColorContent=ffffff&bgColorDefault=dcd9de&bgTextureDefault=03_highlight_soft.png&bgImgOpacityDefault=100&borderColorDefault=dcd9de&fcDefault=3d2163&iconColorDefault=3d2163&bgColorHover=dcd9de&bgTextureHover=03_highlight_soft.png&bgImgOpacityHover=100&borderColorHover=dcd9de&fcHover=ce469d&iconColorHover=ce469d&bgColorActive=ce469d&bgTextureActive=03_highlight_soft.png&bgImgOpacityActive=45&borderColorActive=d1c5d8&fcActive=ffffff&iconColorActive=3d2163&bgColorHighlight=fbc51d&bgTextureHighlight=04_highlight_hard.png&bgImgOpacityHighlight=55&borderColorHighlight=ce469d&fcHighlight=333333&iconColorHighlight=ce469d&bgColorError=ce469d&bgTextureError=04_highlight_hard.png&bgImgOpacityError=25&borderColorError=ce469d&fcError=ffffff&iconColorError=fbc51d&bgColorOverlay=eeeeee&bgTextureOverlay=01_flat.png&bgImgOpacityOverlay=0&opacityOverlay=80&bgColorShadow=aaaaaa&bgTextureShadow=01_flat.png&bgImgOpacityShadow=0&opacityShadow=60&thicknessShadow=4px&offsetTopShadow=-4px&offsetLeftShadow=-4px&cornerRadiusShadow=0px'></iframe>						
+			</div>
+			<div id="cssframework_dialog">			
+		  		<iframe class='ui_corner_all' src='http://wiki.jqueryui.com/jQuery-UI-CSS-Framework'></iframe>						
+			</div>
+		</div>
+		<div class="slide">
+			<h3 class="wonka-green">How I Made To Fix This</h3>
+			<ul>
+				<li>Programmatic invocation of slide navigation</li>
+				<li>Scriptable slides</li>
+				<li>Themeroller Support</li>
+				<li>Cut down on DOM interrogation</li>
+			</ul>
+			<div class="sh_wrapper">
+			  	<textarea class='brush: js'>
+					(function($) {
+						var navigationTimeout,
+							swapActive = function(e) {
+								$(e.target).closest("li").not("."+this.options.currentClass).toggleClass("ui-state-active",e.type == "mouseover").toggleClass("ui-state-default",e.type == "mouseout");			
+							};
+
+						$.widget( "aj.presentation", {
+							options: {
+									slide: '.slide',
+									pagerClass: 'aj-presentation-pager',
+									prevNextClass: 'aj-presentation-prev-next',
+									currentClass:"aj-presentation-current",
+									prevText: 'Previous',
+									nextText: 'Next',
+									transition: "fade",
+									start: parseInt(window.location.hash.substr(1)) || 1,
+									navigate:$.noop,
+									slides:false,
+									pager:false,
+									prevNext:false,
+									themeswitcher:false
+							},
+							_create: function() {
+						        this.slides = this.element.find(this.options.slide).addClass("aj-presentation-slide")
+								this.options.slides && this._connectSlides();
+								//Make sure the starting value isn't 0
+								this.options.start = this.options.start || 1;
+								//Set the current to the specified starting slide, a number in the url,
+								this.current = this.slides.filter(":nth-child("+this.options.start+")");
+								//Use 'count' to store the current slide number
+								this.count = this.options.start;
+						        //Hide everything except the hash or the first			
+								this.slides.not(this.current[0]).hide()
+						        this._addControls();
+								$(document.body).addClass("ui-widget-content");
+
+							},
+							_setOption:function(key,value) {
+								switch(key)	{
+									case "pager":
+									case "prevNext":
+										this.options[key] = value;
+										this[key][(value ? "remove" : "add")+"Class"]("ui-helper-hidden");
+										break;
+								}
+							},
+							_addControls:function() {
+								var self = this, pagerPages = [], i = 0, numSlides = this.slides.length;
+						        //Add in the pager
+						        this.pager = $('<ol class="ui-widget-header ui-corner-top '+this.options.pagerClass + (!this.options.pager ? ' ui-helper-hidden': '') +'">');
+						        for(i = 1; i < numSlides+1; i++) {
+						          pagerPages.push('<li class="ui-state-default ui-corner-top"><a href="#'+i+'">'+i+'</a></li>');
+						        }
+								this.pager
+									.html(pagerPages.join(''))
+									.appendTo(this.element)
+									.delegate("a","mouseenter mouseleave",$.proxy(swapActive,this))
+									.delegate("a","click",$.proxy(this._pagerClick,this));
+								this.pagerPages = this.pager.children();
+								this.pagerPages.eq(this.count-1).addClass(this.options.currentClass).toggleClass("ui-state-default ui-state-active");
+								this.navigate("init");
+
+						        //Add in the previous/next links
+						        this.prevNext = $('<ul class="'+this.options.prevNextClass+ (!this.options.prevNext ? ' ui-helper-hidden': '')+ '">' +
+												'<li class="ui-state-default ui-corner-bottom"><a href="#prev" class="prev">'+this.options.prevText+'</a></li>' +
+												'<li class="ui-state-default ui-corner-bottom"><a href="#next" class="next">'+this.options.nextText+'</a></li>')
+												.appendTo(this.element)
+												.delegate("a","mouseenter mouseleave",$.proxy(swapActive,this))
+												.delegate("a","click",function(e){
+													self.navigate($(this).attr("class"),e)
+												});
+
+								//Add in the themeswitcher widget if available 
+								if (this.options.themeswitcher && $.fn.themeswitcher) {
+									this.switcher = $("<li>").appendTo(this.prevNext).themeswitcher();
+								}
+						        //When you hit the left arrow, go to previous slide
+						        //When you hit the right arrow, go to next slide
+						        $(document).bind("keyup.presentation",function(e) {
+						          var action = "";
+									if (!$(e.target).is(":input")) {
+										switch(e.keyCode) {
+											case $.ui.keyCode.LEFT:
+												action = "prev";
+												break;
+											case $.ui.keyCode.RIGHT:
+											case $.ui.keyCode.SPACE:
+												action = "next";
+												break;
+										}
+							          action.length && self.navigate(action,e);
+									}
+						        }).bind("dblclick.presentation",function(e) {
+									self.navigate("next",e);
+								});	
+							},
+							_connectSlides:function(){
+								$.each(this.options.slides,$.proxy(function(key,slide){
+									//If the key is a number, associate the slide data with the according slide
+									var self = this;
+									if (!isNaN(+key)){
+										var s = this.slides.eq(+key-1).bind("navigate.presentation",function(e,ui){
+											slide[ui.action] && slide[ui.action].call(s,e,ui);
+										});
+										slide.init && slide.init.call(s,$.Event("init.presentation"),this._ui("visible"));
+									} else {
+										this.element.delegate(key,"navigate.presentation",function(e,ui){
+											slide[ui.action] && slide[ui.action].call(this,e,ui)
+										})
+										slide.init && this.element.find(key).each(function(i,n) { slide.init.call(this,$.Event("init.presentation"),self) });
+									}
+								},this));
+							},
+							navigate:function(action,event){
+								//TODO: Prevent navigation below 0 and above max slides
+								navigationTimeout && clearTimeout(navigationTimeout);
+								navigationTimeout =  setTimeout($.proxy(function() {
+								var navTo, ui = this._ui("visible");
+									if (typeof action == "string"){
+										action == "next" && this.count++;
+										action == "prev" && this.count--;
+									} else {
+										this.count = action;
+									}
+									//We don't want to navigate to a slide that doesn't exist
+									navTo = this.slides.eq(this.count-1);
+									if (!navTo.length) {
+										return;
+									}
+									this.current = navTo;
+									$.extend(ui,this._ui("selected"));
+									if(action == "init") {
+										ui.selectedSlide.trigger("navigate.presentation",[$.extend({action:"open"},ui)])													
+									} else {
+										this._trigger("navigate",event,ui);
+							  	     	switch (this.options.transition) {
+							  	        	case 'show':
+											case 'hide':
+												ui.visibleSlide.trigger("navigate.presentation",[$.extend({action:"close"},ui)])
+												ui.visibleSlide.hide();
+												ui.selectedSlide.show();
+												ui.selectedSlide.trigger("navigate.presentation",[$.extend({action:"open"},ui)])								
+												break;
+											case 'slide':
+												ui.visibleSlide.trigger("navigate.presentation",[$.extend({action:"close"},ui)])							
+												ui.visibleSlide.slideUp(500, function () {
+												    ui.selectedSlide.slideDown(1000,function(){
+														ui.selectedSlide.trigger("navigate.presentation",[$.extend({action:"open"},ui)])															
+													})
+												});
+												break;
+											default:
+												ui.visibleSlide.trigger("navigate.presentation",[$.extend({action:"close"},ui)])							
+												ui.visibleSlide.fadeOut(500,function() {
+													ui.selectedSlide.fadeIn(500,function(){
+														ui.selectedSlide.trigger("navigate.presentation",[$.extend({action:"open"},ui)])																							
+													});
+												});
+										}
+										window.location.hash = this.count;
+									}
+									if (this.options.pager) {
+						  				this.pagerPages.removeClass(this.options.currentClass+ " ui-state-active").addClass("ui-state-default").eq(this.count-1).addClass(this.options.currentClass + " ui-state-active");
+									}
+								},this),500);
+
+							},
+							_pagerClick:function(event) {
+								event.preventDefault();
+								this.navigate($(event.target).parent().prevAll().length+1,event);
+
+							},
+							_ui:function(mode) {
+								var ui = {presentation:this};
+								mode = $.isArray(mode) ? mode : [mode];
+								$.each(mode,$.proxy(function(i,m){
+									ui[m+"Slide"] = this.current;
+									ui[m+"SlideIndex"] = this.count;
+								},this));
+								return ui;
+							},
+							next:function(e){
+								this.navigate("next",e)
+							},
+							prev:function(e){
+								this.navigate("prev",e)
+							}
+						});
+
+					}(jQuery));					
+				</textarea>
+			</div>
+		</div>
+		<div class="slide">
+			<h3 class="wonka-yellow">"So the factory's yours, Charlie"</h3>
+			<ul>
+				<li>The widget factory makes it faster and easier to develop complex plugins</li>
+				<li>Write the code that your plugin needs, not an interface</li>
+				<li>You don't even need the rest of jQuery UI to use it</li>
+				<li>I want a Snuggie
+					<div class='ui-state-default ui-corner-all' id="snuggie_trigger" style="display:inline-block;">
+						<span class="ui-icon ui-icon-link"></span>
+					</div>				
+				</li>
+			</ul>
+			<div id="snuggieplease">			
+		  		<iframe class='ui_corner_all' src='http://gyazo.com/526b34b4e873dc2dc044607554d3afbc.png'></iframe>						
+			</div>
+			<div id='themeswitcher'></div>
+						
+		</div>
+		<div class="slide">
+			<h2 class="wonka-magenta">Thxx</h2>
+			<ul>
+				<li style="list-style:none;">More resources:</li>
+				<li><a href="http://docs.jquery.com/UI_Developer_Guide#The_widget_factory">Developer's Guide</a></li>
+				<li><a href="http://www.erichynds.com/jquery/tips-for-developing-jquery-ui-widgets/">Tips for Developing UI Widgets</a></li>
+				<li><a href="http://net.tutsplus.com/tutorials/javascript-ajax/coding-your-first-jquery-ui-plugin/">Coding Your First jQuery UI Plugin</a></li>
+				<li><a href="http://wiki.jqueryui.com/">jQuery UI Planning Wiki</a></li>
+				<li><a href="http://www.yayquery.com/">yayQuery Podcast</a></li>
+			</ul>
+			<img src="images/thanks.jpg" width="160" height="120" id="thanks" class="box_rotate">
+		</div>
       </div>
-
-    <script type="text/javascript" src="scripts/jquery.js"></script>
-	<script type="text/javascript" src="scripts/jquery-ui-1.8.js"></script>
-    <script type="text/javascript" src="scripts/jquery.aj.presentation.js"></script>
-    <script type="text/javascript" src="scripts/global.js"></script>
+    <script src="scripts/jquery.js"></script>
+	<script src="../js/jquery-ui/build/dist/jquery-ui-1.9pre/ui/jquery-ui.js"></script>
+	<script src="scripts/jquery.aj.presentation.js"></script>
+    <script src="scripts/charlie.js"></script>
+	<script src="scripts/jquery.easing.1.3.js"></script>
+	<script src="sh/src/shCore.js"></script>
+	<script src="sh/scripts/shBrushJScript.js"></script>
 	<script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
-
-  </body>
+	<script>
+		SyntaxHighlighter.config.clipboardSwf = 'sh/scripts/clipboard.swf';	
+		SyntaxHighlighter.config.tagName = 'textarea';
+		SyntaxHighlighter.defaults['class-name'] = 'ui-corner-all';
+	</script>
+	</body>
 </html>

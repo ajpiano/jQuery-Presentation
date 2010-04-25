@@ -1,0 +1,204 @@
+/* @group reset */
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, .btn 
+{ margin: 0; padding: 0; border: 0; font-size: 100%; font-family: inherit; vertical-align: baseline }
+a img, frameset { border: 0; }
+table {	border-collapse: collapse; border-spacing: 0; }
+caption, th, td { text-align: left;	font-weight: normal; }
+blockquote:before, blockquote:after, q:before, q:after { content: ""; }
+blockquote, q {	quotes: "" ""; }
+
+.floatRight { float:right;}
+.floatLeft {float:left;}
+
+@font-face {
+	font-family: 'WillyWonkaRegular';
+	src: url('willywonka.eot');
+	src: local('☺'), url('willywonka.woff') format('woff'), url('willywonka.ttf') format('truetype'), url('willywonka.svg#WillyWonka') format('svg');
+}
+
+
+.box_rotate {
+     -moz-transform: rotate(-3deg);  /* FF3.5+ */
+       -o-transform: rotate(-3deg);  /* Opera 10.5 */
+  -webkit-transform: rotate(-3deg);  /* Saf3.1+, Chrome */
+             filter:  progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', 
+                     M11=0.9986295347545738, M12=0.05233595624294383, M21=-0.05233595624294383, M22=0.9986295347545738); /* IE6,IE7 */
+         -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(SizingMethod='auto expand', 
+                     M11=0.9986295347545738, M12=0.05233595624294383, M21=-0.05233595624294383, M22=0.9986295347545738)"; /* IE8 */
+               zoom: 1;
+}
+
+.wonka-green {
+	color:#8ef529;
+}
+.wonka-yellow {
+	color:#fbc51d;
+}
+
+.wonka-magenta {
+	color:#ce469d;
+}
+.wonka-blue {
+	color:#09f;
+}
+.wonka-white {
+	color:#fff;
+}
+.wonka-orange {
+	color:#f45b20;
+}
+
+.wonka-red {
+	color:#ff1600;
+}
+
+.strikethrough {
+	text-decoration: line-through;
+}
+
+div.syntaxhighlighter {
+  background-image: -moz-linear-gradient(top, #dcd9de, #999999); /* FF3.6 */
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #dcd9de),color-stop(1, #999999)) ; /* Saf4+, Chrome */
+            filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#dcd9de', EndColorStr='#999999'); /* IE6,IE7 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#dcd9de', EndColorStr='#999999')"; /* IE8 */
+		     -moz-box-shadow: 4px 4px 4px #999; /* FF3.5+ */
+		  -webkit-box-shadow: 4px 4px 4px #999; /* Saf3.0+, Chrome */
+		          box-shadow: 4px 4px 4px #999; /* Opera 10.5, IE 9.0 */
+			max-height:350px;
+			overflow-y:auto;
+}
+
+.box_shadow {
+	     -moz-box-shadow: 4px 4px 4px #999; /* FF3.5+ */
+	  -webkit-box-shadow: 4px 4px 4px #999; /* Saf3.0+, Chrome */
+	          box-shadow: 4px 4px 4px #999; /* Opera 10.5, IE 9.0 */	
+}
+.yellow_border {
+	border:1px solid #fbc51d;
+}
+.white_border {
+	border:1px solid #fff;
+}
+.magenta_border {
+	border:1px solid #ce469d;
+}
+
+
+
+.contain-overflow { overflow: hidden; }
+.screen-reader { display: block; left: -9999px; position: absolute; top: -9999px; }
+.row:after, .clearfix:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+.amp { font-family: Baskerville, "Goudy Old Style", "Palatino", "Book Antiqua", serif; font-size: 1.1em; font-style: italic; font-weight: normal; }
+/* @end */
+
+/* @group =base */
+body {
+	font: 24px/36px Helvetica, Arial, Sans-Serif;
+}
+
+	/* @group -headers */
+	h1, h2, h3, h4, h5, h6 { margin-bottom:5px;font-weight: normal; font-style: normal;line-height:normal; font-family: 'WillyWonkaRegular', sans-serif;  text-shadow: 2px 3px 2px #999; }
+	h1 { font-size:300%; }
+	h2 { font-size:250%; }
+	h3 { font-size:210%; }
+	h4 { font-size:180%; }
+	h5 { font-size:160%; }
+	h6 { font-size:145%; }
+	/* @end */
+
+	/* @group -links */
+	a, a:link { text-decoration: underline; }
+	a:visited {}
+	a:hover { text-decoration: none; }
+	a:active {}
+	/* @end */
+	
+	/* @group -basic text */
+	p, ol, ul, table { margin: 0 0 30px; }
+	ul { list-style: disc; }
+	ul ul { margin:0 auto; list-style:none;}
+	ul ul li { padding-left:2em;}
+	li { padding: 5px 0; }
+	li:first-child { padding-top: 0; }
+	li:last-child { border-bottom: none; padding-bottom: 0; }
+	/* @end */
+
+
+	/* @group -form elements */
+	button { 
+		cursor: pointer; 
+		width: auto;
+		overflow: visible;
+	}
+	label { font-weight: bold; }
+	/* @end */		
+
+/* @end */
+
+  /* @group -slides */
+  #slides { top: 30px; }
+  .slide { padding: 3%; width:88%;}
+
+.slide.center {
+	text-align:center;
+}
+
+/*intro slide */
+
+	#yayQueryLogo {
+		margin-top:20px;
+	}
+	
+/* jquery plugins are awesome */
+
+	#awesome_jquery_plugins {
+		position:absolute;
+		left:0;
+		top:0;
+		height:400px;
+		width:33%;
+		display:none;
+	}
+	
+
+/* stateful definition */
+
+	#stateful_wiki {
+		width:75%;
+		height:250px;
+	}
+
+/* achieving statefulness */	
+	#alaska_statehood {
+		height:400px;
+	}
+	
+#catwf div.external_dialog iframe {
+	width:100%;
+	height:95%;
+}
+
+/* i've got a golden ticket */
+#goldenticket {
+	position:absolute;
+	left:-500px;
+	display:none;
+}
+
+#oompaloompa {
+	position:absolute;
+	right:500px;
+	display:none;
+}
+
+#thanks {
+	position:absolute;
+	right:1000px;
+	display:none;
+}

@@ -60,17 +60,31 @@
 			$(document.body).addClass("ui-widget-content");
 
 		},
+		_setOption:function(key,value) {
+			switch(key)	{
+				case "pager":
+				case "prevNext":
+					this.options[key] = value;
+					this[key][(value ? "remove" : "add")+"Class"]("ui-helper-hidden");
+					break;
+			}
+		},
 		_addControls:function() {
 			var self = this, pagerPages = [], i = 0, numSlides = this.slides.length;
 	        //Add in the pager
-	        this.pager = $('<ol class="'+this.options.pagerClass + (!this.options.pager ? ' ui-helper-hidden': '') +'">');
+	        this.pager = $('<ol class="ui-widget-header ui-corner-top '+this.options.pagerClass + (!this.options.pager ? ' ui-helper-hidden': '') +'">');
 	        for(i = 1; i < numSlides+1; i++) {
 	          pagerPages.push('<li class="ui-state-default ui-corner-top"><a href="#'+i+'">'+i+'</a></li>');
 	        }
-			this.pager.html(pagerPages.join('')).appendTo(this.element).delegate("a","mouseenter mouseleave",$.proxy(swapActive,this)).delegate("a","click",$.proxy(this._pagerClick,this));
+			this.pager
+				.html(pagerPages.join(''))
+				.appendTo(this.element)
+				.delegate("a","mouseenter mouseleave",$.proxy(swapActive,this))
+				.delegate("a","click",$.proxy(this._pagerClick,this));
 			this.pagerPages = this.pager.children();
 			this.pagerPages.eq(this.count-1).addClass(this.options.currentClass).toggleClass("ui-state-default ui-state-active");
-
+			this.navigate("init");
+			
 	        //Add in the previous/next links
 	        this.prevNext = $('<ul class="'+this.options.prevNextClass+ (!this.options.prevNext ? ' ui-helper-hidden': '')+ '">' +
 							'<li class="ui-state-default ui-corner-bottom"><a href="#prev" class="prev">'+this.options.prevText+'</a></li>' +
@@ -78,7 +92,7 @@
 							.appendTo(this.element)
 							.delegate("a","mouseenter mouseleave",$.proxy(swapActive,this))
 							.delegate("a","click",function(e){
-								self._navigate($(this).attr("class"),e)
+								self.navigate($(this).attr("class"),e)
 							});
 
 			//Add in the themeswitcher widget if available 
@@ -89,13 +103,21 @@
 	        //When you hit the right arrow, go to next slide
 	        $(document).bind("keyup.presentation",function(e) {
 	          var action = "";
-	          if(e.keyCode === 37) {
-	            action = 'prev';
-	          } else if(e.keyCode === 39) {
-	            action = 'next';
-	          }
-	          action.length && self._navigate(action,e);
-	        });			
+				if (!$(e.target).is(":input")) {
+					switch(e.keyCode) {
+						case $.ui.keyCode.LEFT:
+							action = "prev";
+							break;
+						case $.ui.keyCode.RIGHT:
+						case $.ui.keyCode.SPACE:
+							action = "next";
+							break;
+					}
+		          action.length && self.navigate(action,e);
+				}
+	        }).bind("dblclick.presentation",function(e) {
+				self.navigate("next",e);
+			});	
 		},
 		_connectSlides:function(){
 			$.each(this.options.slides,$.proxy(function(key,slide){
@@ -114,43 +136,53 @@
 				}
 			},this));
 		},
-		_navigate:function(action,event){
+		navigate:function(action,event){
 			//TODO: Prevent navigation below 0 and above max slides
 			navigationTimeout && clearTimeout(navigationTimeout);
 			navigationTimeout =  setTimeout($.proxy(function() {
-			var ui = this._ui("visible");
+			var navTo, ui = this._ui("visible");
 				if (typeof action == "string"){
 					action == "next" && this.count++;
 					action == "prev" && this.count--;
 				} else {
 					this.count = action;
 				}
-				this.current = this.slides.eq(this.count-1);
+				//We don't want to navigate to a slide that doesn't exist
+				navTo = this.slides.eq(this.count-1);
+				if (!navTo.length) {
+					return;
+				}
+				this.current = navTo;
 				$.extend(ui,this._ui("selected"));
-				this._trigger("navigate",event,ui);
-	  	     	switch (this.options.transition) {
-	  	        	case 'show':
-					case 'hide':
-						ui.visibleSlide.trigger("navigate.presentation",[$.extend({action:"close"},ui)])
-						ui.visibleSlide.hide();
-						ui.selectedSlide.show();
-						ui.selectedSlide.trigger("navigate.presentation",[$.extend({action:"open"},ui)])								
-						break;
-					case 'slide':
-						ui.visibleSlide.trigger("navigate.presentation",[$.extend({action:"close"},ui)])							
-						ui.visibleSlide.slideUp(500, function () {
-						    ui.selectedSlide.slideDown(1000,function(){
-								ui.selectedSlide.trigger("navigate.presentation",[$.extend({action:"open"},ui)])															
-							})
-						});
-						break;
-					default:
-						ui.visibleSlide.trigger("navigate.presentation",[$.extend({action:"close"},ui)])							
-						ui.visibleSlide.fadeOut(500,function() {
-							ui.selectedSlide.fadeIn(500,function(){
-								ui.selectedSlide.trigger("navigate.presentation",[$.extend({action:"open"},ui)])																							
+				if(action == "init") {
+					ui.selectedSlide.trigger("navigate.presentation",[$.extend({action:"open"},ui)])													
+				} else {
+					this._trigger("navigate",event,ui);
+		  	     	switch (this.options.transition) {
+		  	        	case 'show':
+						case 'hide':
+							ui.visibleSlide.trigger("navigate.presentation",[$.extend({action:"close"},ui)])
+							ui.visibleSlide.hide();
+							ui.selectedSlide.show();
+							ui.selectedSlide.trigger("navigate.presentation",[$.extend({action:"open"},ui)])								
+							break;
+						case 'slide':
+							ui.visibleSlide.trigger("navigate.presentation",[$.extend({action:"close"},ui)])							
+							ui.visibleSlide.slideUp(500, function () {
+							    ui.selectedSlide.slideDown(1000,function(){
+									ui.selectedSlide.trigger("navigate.presentation",[$.extend({action:"open"},ui)])															
+								})
 							});
-						});
+							break;
+						default:
+							ui.visibleSlide.trigger("navigate.presentation",[$.extend({action:"close"},ui)])							
+							ui.visibleSlide.fadeOut(500,function() {
+								ui.selectedSlide.fadeIn(500,function(){
+									ui.selectedSlide.trigger("navigate.presentation",[$.extend({action:"open"},ui)])																							
+								});
+							});
+					}
+					window.location.hash = this.count;
 				}
 				if (this.options.pager) {
 	  				this.pagerPages.removeClass(this.options.currentClass+ " ui-state-active").addClass("ui-state-default").eq(this.count-1).addClass(this.options.currentClass + " ui-state-active");
@@ -160,7 +192,7 @@
 		},
 		_pagerClick:function(event) {
 			event.preventDefault();
-			this._navigate($(event.target).parent().prevAll().length+1,event);
+			this.navigate($(event.target).parent().prevAll().length+1,event);
 
 		},
 		_ui:function(mode) {
@@ -173,10 +205,10 @@
 			return ui;			
 		},
 		next:function(e){
-			this._navigate("next",e)
+			this.navigate("next",e)
 		},
-		next:function(e){
-			this._navigate("prev",e)
+		prev:function(e){
+			this.navigate("prev",e)
 		}
 	});
 

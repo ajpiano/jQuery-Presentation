@@ -27,56 +27,59 @@
 			prevNextClass: 'nav-prev-next',
 			prevText: 'Previous',
 			nextText: 'Next',
-			transition: "fade"
+			transition: "fade",
+			changeSlide:$.noop
 		};
-    $(this).each(function() {
+   return $(this).each(function() {
       
       
       var $presentation = $(this);
       $presentation.count = 1;
 
       //Control the changing of the slide
-      $presentation.changeSlide = function(newSlide) {
+      $presentation.changeSlide = function(newSlide,event) {
       
       	$presentation.visibleSlide = $presentation.slides.filter(':visible');
+      	$presentation.visibleSlideIndex = $presentation.slides.index($presentation.visibleSlide)+1;
         $presentation.slideToShow = $presentation.slides.filter(':nth-child('+newSlide+')')
-      
-      	switch ($presentation.options.transition) {
-        	case 'show/hide':
-						$presentation.visibleSlide.hide();
-						$presentation.slideToShow.show();
-						break;
-					case 'slide':
-						$presentation.visibleSlide.slideUp(500, function () {
-						    $presentation.slideToShow.slideDown(1000)
-						});
-						break;
-					default:
-						$presentation.visibleSlide.fadeOut(500);
-						$presentation.slideToShow.fadeIn(500)
-				}
+      	if (false!==$presentation.options.changeSlide.call($presentation,event,{visible:$presentation.visibleSlide,visibleIndex:$presentation.visibleSlideIndex,selected:$presentation.slideToShow,selectedIndex:newSlide})) {
+	      	switch ($presentation.options.transition) {
+	        	case 'show/hide':
+							$presentation.visibleSlide.hide();
+							$presentation.slideToShow.show();
+							break;
+						case 'slide':
+							$presentation.visibleSlide.slideUp(500, function () {
+							    $presentation.slideToShow.slideDown(1000)
+							});
+							break;
+						default:
+							$presentation.visibleSlide.fadeOut(500);
+							$presentation.slideToShow.fadeIn(500)
+					}
 				        
-        $presentation.find('.'+$presentation.options.pagerClass).children('.current').removeClass('current');
-        $presentation.find('.'+$presentation.options.pagerClass).children(':nth-child('+newSlide+')').addClass('current');
+	        $presentation.find('.'+$presentation.options.pagerClass).children('.current').removeClass('current');
+	        $presentation.find('.'+$presentation.options.pagerClass).children(':nth-child('+newSlide+')').addClass('current');
+		}
       };
       
       //Handle clicking of a specific slide
-      $presentation.pageClick = function($pager) {
+      $presentation.pageClick = function($pager,event) {
         if(!$pager.parent().hasClass('current')) {
-          $presentation.changeSlide($pager.parent().prevAll().length + 1);
+          $presentation.changeSlide($pager.parent().prevAll().length + 1,event);
           $presentation.count = $pager.parent().prevAll().length + 1;
         }
       };
       
       //Handle the previous and next functionality
-      $presentation.prevNextClick = function(action) {
+      $presentation.prevNextClick = function(action,event) {
         if(action === 'prev') {
           $presentation.count === 1 ? $presentation.count = $presentation.slides.length : $presentation.count--;            
         } else {
           $presentation.count === $presentation.slides.length ? $presentation.count = 1 : $presentation.count++;
         }
         
-        $presentation.changeSlide($presentation.count);
+        $presentation.changeSlide($presentation.count,event);
         window.location.hash = '#'+$presentation.count;
       };
       
@@ -102,13 +105,13 @@
         $presentation.append('<ul class="'+$presentation.options.prevNextClass+'"><li><a href="#prev" class="prev">'+$presentation.options.prevText+'</a></li><li><a href="#next" class="next">'+$presentation.options.nextText+'</a></li>');
         
         //When a specific page is clicked, go to that page
-        $presentation.find('.'+$presentation.options.pagerClass).find('a').bind('click', function() {
-          $presentation.pageClick($(this));
+        $presentation.find('.'+$presentation.options.pagerClass).find('a').bind('click', function(e) {
+          $presentation.pageClick($(this),e);
         });
         
         //When you click a previous/next link
-        $presentation.find('.'+$presentation.options.prevNextClass).find('a').click(function() {
-          $presentation.prevNextClick($(this).attr('class'));
+        $presentation.find('.'+$presentation.options.prevNextClass).find('a').click(function(e) {
+          $presentation.prevNextClick($(this).attr('class'),e);
           return false;
         });
         
@@ -130,7 +133,7 @@
       
       //Start this thing
       $presentation.init = function() {
-        $presentation.options = $.extend(config, options);
+        $presentation.options = $.extend({},config, options);
         $presentation.slides = $presentation.find($presentation.options.slide);
         $presentation.currentHash = window.location.hash.substr(1);
         
