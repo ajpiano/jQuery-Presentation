@@ -530,7 +530,7 @@ $(document).ready(function(){
 	SyntaxHighlighter.all();
 	var preso = $('#slides').presentation({
 			slides:aj.slides, 
-			pager:false,
+			pager:true,
 			prevNext:true,
 			themeswitcher:false,
 			navigate:function(e,ui) {
