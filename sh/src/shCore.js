@@ -1220,11 +1220,9 @@ var sh = {
 	 */
 	all : function(params)
 	{
-		sh.utils.addEvent(
-			window,
-			'load',
-			function() { sh.highlight(params); }
-		);
+		jQuery(document).ready(function() {
+			sh.highlight(params);
+		});
 	}
 }; // end of sh
 
