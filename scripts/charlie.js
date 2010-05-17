@@ -531,9 +531,6 @@ $(document).ready(function(){
 			slides:aj.slides, 
 			pager:true,
 			prevNext:true,
-			themeswitcher:false,
-			navigate:function(e,ui) {
-				console.log("omg i navigated! hollaback!")
-			}
+			themeswitcher:false
 	});
 });
