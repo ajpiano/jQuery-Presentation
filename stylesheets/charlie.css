@@ -202,3 +202,12 @@ body {
 	right:1000px;
 	display:none;
 }
+
+#navhelp {
+	position:fixed;
+	bottom:0;
+	right:20px;
+	font: 14px/20px Helvetica, Arial, Sans-Serif;
+	padding:5px 5px 0 5px;
+	
+}

@@ -153,7 +153,7 @@
 
 							//copy the data to the proxy element
 							wonkaed.data($this.data()).click(function(){
-								$.fn.wonkafy.pulsate($this);
+								$.fn.wonkafy.pulsate($(this));
 							});
 						});					
 					} 
@@ -177,7 +177,7 @@
 				$.fn.wonkafy.pulsate = function(elem) {
 					var opts = elem.data("options.wonkafy"),
 						wonkaed = elem.data("wonkaed.wonkafy"),
-						isWonka = elem.data("isWonka");
+						isWonka = elem.data("isWonka.wonkafy");
 					if (isWonka) {
 						wonkaed.stop(1,1).switchClass("wonka-"+opts.color,"wonka-"+opts.pulseColor,2000,function(){
 							wonkaed.switchClass("wonka-"+opts.pulseColor,"wonka-"+opts.color,2000,opts.pulsated);
@@ -523,12 +523,11 @@
 				
 	};
 	window.aj = $.extend($.aj,aj);
-	
 })(window,document,jQuery);
 
 $(document).ready(function(){
-	SyntaxHighlighter.all();
-	var preso = $('#slides').presentation({
+	SyntaxHighlighter.all();	
+ 	var preso = $('#slides').presentation({
 			slides:aj.slides, 
 			pager:true,
 			prevNext:true,
@@ -536,8 +535,5 @@ $(document).ready(function(){
 			navigate:function(e,ui) {
 				console.log("omg i navigated! hollaback!")
 			}
-		}),
-		slides = preso.children(".slide");
-//		$("pre").jush("js").addClass("ui-corner-all");
-//		$("code").chili().parent().addClass("ui-corner-all");
+	});
 });

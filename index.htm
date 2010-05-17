@@ -111,7 +111,7 @@
 
 							//copy the data to the proxy element
 							wonkaed.data($this.data()).click(function(){
-								$.fn.wonkafy.pulsate($this);
+								$.fn.wonkafy.pulsate($(this));
 							});
 						});					
 					} 
@@ -135,7 +135,7 @@
 				$.fn.wonkafy.pulsate = function(elem) {
 					var opts = elem.data("options.wonkafy"),
 						wonkaed = elem.data("wonkaed.wonkafy"),
-						isWonka = elem.data("isWonka");
+						isWonka = elem.data("isWonka.wonkafy");
 					if (isWonka) {
 						wonkaed.stop(1,1).switchClass("wonka-"+opts.color,"wonka-"+opts.pulseColor,2000,function(){
 							wonkaed.switchClass("wonka-"+opts.pulseColor,"wonka-"+opts.color,2000,opts.pulsated);
@@ -820,6 +820,9 @@
 			<img src="images/thanks.jpg" width="160" height="120" id="thanks" class="box_rotate">
 		</div>
       </div>
+		<aside id="navhelp" class="ui-state-default ui-corner-top">
+			<strong>Hot Tip!</strong> Click a slide to see if it has more to show you.<br/>Double-click to go to the next slide.
+		</aside>
     <script src="http://code.jquery.com/jquery-1.4.2.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.js"></script>
 	<script src="scripts/jquery.aj.presentation.js"></script>
