@@ -505,14 +505,9 @@
 						snuggieplease.dialog("open");
 					});				
 			},
-			open:function(e,ui) {
-				$(document).bind("click.slide18",$.proxy(function() {
-					$(this).data("hidden").filter(":hidden").first().slideDown();
-				},this));
-			},
 			close:function(e,ui) {
 				$(this).data("hidden").hide();
-				$(document).unbind("click.slide18");
+				$(document).unbind("click.slide19");
 			}
 		},
 		21:{
