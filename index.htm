@@ -7,8 +7,8 @@
     <link href="stylesheets/wonka/jquery-ui-1.8.custom.css" type="text/css" rel="stylesheet" media="Screen,projection" />
     <link href="stylesheets/aj.presentation.css" type="text/css" rel="stylesheet" media="Screen,projection" />
     <link href="stylesheets/charlie.css" type="text/css" rel="stylesheet" media="Screen,projection" />
-	<link href="sh/styles/shCore.css" rel="stylesheet" type="text/css" />
-	<link href="sh/styles/shThemeDefault.css" type="text/css" rel="stylesheet"/>
+    <link href="sh_old/styles/shCore.css" rel="stylesheet" type="text/css" />
+    <link href="sh_old/styles/shThemeDefault.css" type="text/css" rel="stylesheet"/>
   </head>
   <body id="catwf">
       <div id="slides">
@@ -19,10 +19,10 @@
 				<h2>Widget Factory</h2>
 				<br/>
 				<h3>Adam &nbsp; J. Sontag</h3>
-				<br/>
+                                <br/>
 			</header>
-			<img src="http://yayquery.com/yayQueryLogo.png" alt="YayQueryLogo" id="yayQueryLogo" width="25%">
-			<p>BAjqCON, 25 April 2010</p>
+			<img src="images/yayQueryLogo.png" alt="YayQueryLogo" id="yayQueryLogo" width="25%">
+			<p>Boston jQuery Meetup, 6 October 2010</p>
         </div>
         <div class="slide box_rotate center">
           <h1 class='wonka-blue'>jQuery</h1>
@@ -101,11 +101,11 @@
 						var options = $.extend({},$.fn.wonkafy.defaults,opts);
 						return this.each(function(){
 							var $this = $(this)
-										.data("pre-wonka.wonkafy",this)
-										.data("options.wonkafy",options)
-										.data("isWonka.wonkafy",true),
-								wonkaed = $("<h1 class='wonkafied wonka-"+options.color+"'" + (this.id ? " id='"+this.id+"'" : "") +">"+$this.html()+"</h1>")
-										  .insertAfter(this);
+                                                        .data("pre-wonka.wonkafy",this)
+                                                        .data("options.wonkafy",options)
+                                                        .data("isWonka.wonkafy",true),
+                                                        wonkaed = $("<h1 class='wonkafied wonka-"+options.color+"'" + (this.id ? " id='"+this.id+"'" : "") +">"+$this.html()+"</h1>")
+                                                        .insertAfter(this);
 							//detach the element so that we don't lose the .data
 							$this.data("wonkaed.wonkafy",wonkaed).detach();
 
@@ -556,7 +556,7 @@
 				</li>
 				<li>JUST START UR CODIN!
 					<ul>
-						<li>Stop worrying about infrastructure bullshit!</em>!</li>
+						<li>Stop worrying about infrastructure bullshit!!</li>
 					</ul>				
 				</li>
 				<li>All that other stuff I talked about earlier</li>
@@ -806,7 +806,154 @@
 		  		<iframe class='ui_corner_all' src='http://gyazo.com/526b34b4e873dc2dc044607554d3afbc.png'></iframe>						
 			</div>						
 		</div>
-		<div class="slide">
+		<div class="slide center">
+                  <h2 class="bocoup wonka-magenta">bocoup = <img src='images/bob.png' width='200' height='200'></h2>
+                  <h2 class="bocoup wonka-green"><em>beaucoup</em> = A LOT</h2>
+                  <h2 class="wonka-yellow">BONUS CONTENT!!</h2>
+                </div>
+                <div class="slide">
+                  <h2 class="wonka-green">Inheritance&hellip;</h2>
+                  <img src="images/digitaltombstone.jpg" id="tombstone">						
+                  <ul>
+                    <li>Widgets can inherit from other widgets</li>
+                    <li>Just pass a reference to another widget as the second argument to $.widget</li>
+                    <li>jQuery UI Draggable inherits from the UI Mouse plugin</li>
+                  </ul>
+                  <div class="sh_wrapper">
+                    <textarea class='brush: js'>
+                      $.widget("ui.draggable", $.ui.mouse, {});
+                    </textarea>
+                  </div>
+                </div>
+                <div class="slide" id="inreallife">
+                  <h2 class="wonka-green">&hellip;in Real Life</h2>
+                  <ul>
+                    <li>jQuery UI <em class="wonka-orange">now</em> aims to deliver an extensible base.</li>
+                    <li>Original autocomplete candidate (1.6RC phase) - 21 options!</li>
+                    <li>jQuery UI 1.8+ Autocomplete - FOUR options</li>
+                  </ul>
+                  <div class="sh_wrapper">
+                    <textarea class='brush: js'>
+                      $("#basic_autocomplete").autocomplete({source:"adam aaron apple alpha able amortize adamant".split(" ")});
+                    </textarea>
+                  </div>
+                  <input id="basic_autocomplete" type='text'>
+                  <ul>
+                    <li>But what about [the exact feature that I want]???</li>
+                    <li>Use a callback.</li>
+                  </ul>
+                </div>
+                <div class="slide" id="inreallife">
+                  <h2 class="wonka-magenta">maxlength </h2>
+                  <p>This actually happened in real life.</p>
+                  <label>IDGARA About maxlength<input id="idgara_maxlength" type='text' maxlength='5'></label>
+                  <label>I respect maxlength<input id="respect_maxlength" type='text' maxlength='5'></label>
+                  <div class="sh_wrapper">
+                    <textarea class='brush: xml'>
+                      <input id="idgara_maxlength" type='text' maxlength='5'>
+                      <input id="respect_maxlength" type='text' maxlength='5'>
+                    </textarea>
+                    <textarea class='brush: js'>
+                      var data = "adam ape ab aaron apple amp alpha able amortize adamant alfajor amble".split(" ").sort();
+                      $("#idgara_maxlength").autocomplete({source:data});
+                      $("#respect_maxlength").autocomplete({
+                        source:function(request,response) {
+                                 var l = this.element.attr("maxlength") || 5;
+                                 response($.ui.autocomplete.filter(
+                                     $.grep(data,function(v) {
+                                       return v.length <= l;
+                                     }),request.term)
+                                   );
+                               }
+                      });
+                    </textarea>
+                  </div>
+                </div>
+                <div class="slide">
+                  <h2 class="wonka-yellow">I Want It That Way, Always</h2>
+                  <div class="sh_wrapper">
+                    <textarea class='brush: js'>
+                        $.widget("ww.awesomecomplete",$.ui.autocomplete,{
+                          options:{
+                                    maxlength:5
+                          },
+                          _create:function() {
+
+                                    // As it turns out, a simple test for truthiness of .attr("maxlength")
+                                    // is not sufficient, because different browsers return radically different results
+                                    // if there is no attribute. So we're gonna create a function to encapsulate testing it
+                                    // and this will also allow us to react to any options changes easily.
+
+                                    this.maxlength = this._getMaxlength();
+
+                                    // And then we use the 'super' method from the base autocomplete
+
+                                    $.ui.autocomplete.prototype._create.call(this);
+
+                          },
+                          _response:function(content) {
+
+                                    var l = this.maxlength;
+                                    content = $.grep(content,function(v) {
+                                        return v.length <= l;
+                                    }); 
+                        
+                                    //Invoke the 'super' method 'inherited' from ui.autocomplete,
+                                    //Passing it an array that's filtered against the element's maxlength or the default.
+
+                                    $.ui.autocomplete.prototype._response.call(this,content);
+                                  },
+                          _getMaxlength:function() {
+                              // IE, Opera == undefined
+                              // Firefox == -1
+                              // Webkit == A really high number (52488)
+
+                              var max = this.element.attr("maxlength");
+                              return max && max > -1 && max < 50000 ? max : this.options.maxlength;
+                          },
+                          _setOption:function(key,value) {
+                               $.Widget.prototype._setOption.apply(this,arguments)
+                               switch(key) {
+                                 case "maxlength":
+                                   this.maxlength = this._getMaxlength();
+                                   break;
+                               }
+                          }
+                        });
+                        $("input.backstreet").awesomecomplete({
+                          source:"adam ape ab aaron apple amp alpha able amortize adamant alfajor amble".split(" ").sort()
+                        });
+                    </textarea>
+                  </div>
+                  <label>maxlength: 3<input class="backstreet" type='text' maxlength='3'></label>
+                  <label>maxlength: 4<input class="backstreet" type='text' maxlength='4'></label>
+                  <label>maxlength: 5<input class="backstreet" type='text' maxlength='5'></label>
+                  <label>maxlength: 6<input class="backstreet" type='text' maxlength='6'></label>
+                  <label>maxlength: 7<input class="backstreet" type='text' maxlength='7'></label>
+                  <label>no maxlength<input class="backstreet" type='text'></label>
+                </div>
+                <div class="slide">
+                  <h2 class="wonka-orange">Drawbacks</h2>
+                  <img src="images/stripper.jpg" style='display:block' width="300" height="300">
+                  <p>Anyone can see your privates</p>
+                  <!--
+                  This is actually the opposite problem from many jQuery plugins
+                  which make it difficult to access inner functions
+                  stored on $.fn.foo.bar or private to $.fn.foo, the widget factory
+                  exposes EVERYTHING on 'this' - the plugin instance
+                  -->
+                  <p>Is this bad? Probably not.</p>
+                </div>
+                <div class="slide">
+                  <h2 class="wonka-red">Random Negative Thoughts</h2>
+                  <ul>
+                    <li>"IT'S SO BIG"</li>
+                    <li>If plugins are namespaced, but $.fn["foo"] isn't, who gets it?</li>
+                    <li>Access to "super" methods isn't exactly "super"</li>
+                    <li>Other syntaxes (that don't exist) might be "nicer" than .foo("bar")</li>
+                  </ul>
+                </div>
+		<div class="slide" id='thxx'>
 			<h2 class="wonka-magenta">Thxx</h2>
 			<ul>
 				<li style="list-style:none;">More resources:</li>
@@ -820,20 +967,21 @@
 			<img src="images/thanks.jpg" width="160" height="120" id="thanks" class="box_rotate">
 		</div>
       </div>
-		<aside id="navhelp" class="ui-state-default ui-corner-top">
-			<strong>Hot Tip!</strong> Click a slide to see if it has more to show you.<br/>Double-click to go to the next slide.
-		</aside>
-    <script src="http://code.jquery.com/jquery-1.4.2.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.js"></script>
-	<script src="scripts/jquery.aj.presentation.js"></script>
+      <aside id="navhelp" class="ui-state-default ui-corner-top">
+              <strong>Hot Tip!</strong> Click a slide to see if it has more to show you.<br/>Double-click to go to the next slide.
+      </aside>
+    <script src="scripts/jquery.js"></script>
+    <script src="scripts/jquery-ui-1.9pre.js"></script>
+    <script src="scripts/jquery.aj.presentation.js"></script>
     <script src="scripts/charlie.js"></script>
-	<script src="scripts/jquery.easing.1.3.js"></script>
-	<script src="sh/src/shCore.js"></script>
-	<script src="sh/scripts/shBrushJScript.js"></script>
-	<script>
-		SyntaxHighlighter.config.clipboardSwf = 'sh/scripts/clipboard.swf';	
-		SyntaxHighlighter.config.tagName = 'textarea';
-		SyntaxHighlighter.defaults['class-name'] = 'ui-corner-all';
-	</script>
-	</body>
+    <script src="scripts/jquery.easing.1.3.js"></script>
+    <script src="sh_old/src/shCore.js"></script>
+    <script src="sh_old/scripts/shBrushXml.js"></script>
+    <script src="sh_old/scripts/shBrushJScript.js"></script>
+    <script>
+            SyntaxHighlighter.config.clipboardSwf = 'sh/scripts/clipboard.swf';	
+            SyntaxHighlighter.config.tagName = 'textarea';
+            SyntaxHighlighter.defaults['class-name'] = 'ui-corner-all';
+    </script>
+    </body>
 </html>

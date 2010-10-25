@@ -15,7 +15,12 @@ blockquote, q {	quotes: "" ""; }
 	src: url('willywonka.eot');
 	src: local('☺'), url('willywonka.woff') format('woff'), url('willywonka.ttf') format('truetype'), url('willywonka.svg#WillyWonka') format('svg');
 }
-
+@font-face {
+  font-family: 'OFL Sorts Mill Goudy TT';
+  font-style: normal;
+  font-weight: normal;
+  src: local('OFL Sorts Mill Goudy TT'), url('http://themes.googleusercontent.com/font?kit=9ZZVVBRCceNnPBXqWLH8IBeHOylGMxdcwbe4vXI079w') format('truetype');
+}
 
 .box_rotate {
      -moz-transform: rotate(-3deg);  /* FF3.5+ */
@@ -61,11 +66,11 @@ div.syntaxhighlighter {
   background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #dcd9de),color-stop(1, #999999)) ; /* Saf4+, Chrome */
             filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#dcd9de', EndColorStr='#999999'); /* IE6,IE7 */
         -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#dcd9de', EndColorStr='#999999')"; /* IE8 */
-		     -moz-box-shadow: 4px 4px 4px #999; /* FF3.5+ */
-		  -webkit-box-shadow: 4px 4px 4px #999; /* Saf3.0+, Chrome */
-		          box-shadow: 4px 4px 4px #999; /* Opera 10.5, IE 9.0 */
-			max-height:350px;
-			overflow-y:auto;
+                 -moz-box-shadow: 4px 4px 4px #999; /* FF3.5+ */
+              -webkit-box-shadow: 4px 4px 4px #999; /* Saf3.0+, Chrome */
+                      box-shadow: 4px 4px 4px #999; /* Opera 10.5, IE 9.0 */
+                    max-height:350px;
+                    overflow-y:auto;
 }
 
 .box_shadow {
@@ -99,7 +104,7 @@ div.syntaxhighlighter {
 
 /* @group =base */
 body {
-	font: 24px/36px Helvetica, Arial, Sans-Serif;
+	font: 2em Helvetica, Arial, Sans-Serif;
 }
 
 	/* @group -headers */
@@ -203,6 +208,14 @@ body {
 	display:none;
 }
 
+/* inheritance */
+
+#tombstone {
+	position:absolute;
+	right:500px;
+	display:none;
+}
+
 #navhelp {
 	position:fixed;
 	bottom:0;
@@ -210,4 +223,11 @@ body {
 	font: 14px/20px Helvetica, Arial, Sans-Serif;
 	padding:5px 5px 0 5px;
 	
+}
+.bocoup {
+  font-family: 'OFL Sorts Mill Goudy TT', georgia, times, serif !important;
+}
+
+div.slide label{
+  display:block;
 }

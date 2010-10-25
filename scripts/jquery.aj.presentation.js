@@ -54,9 +54,9 @@
 			this.current = this.slides.filter(":nth-child("+this.options.start+")");
 			//Use 'count' to store the current slide number
 			this.count = this.options.start;
-	        //Hide everything except the hash or the first			
+                        //Hide everything except the hash or the first			
 			this.slides.not(this.current[0]).hide()
-	        this._addControls();
+                        this._addControls();
 			$(document.body).addClass("ui-widget-content");
 
 		},

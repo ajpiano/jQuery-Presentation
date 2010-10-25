@@ -319,6 +319,7 @@
 	padding: 2px;
 	margin: 0;
 	display:block;
+        font-size:.5em;
 }
 .ui-menu .ui-menu {
 	margin-top: -3px;
